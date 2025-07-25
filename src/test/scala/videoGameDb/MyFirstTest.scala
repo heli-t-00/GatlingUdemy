@@ -49,8 +49,8 @@ class MyFirstTest extends Simulation{
   // NB: Can not have MORE than ONE setUp(...)in the SAME file, otherwise Gatling will CRASH
   // To have multiple you need to write a setUp(...) that combines this EXAMPLE====
 
-  setUp(
-    scn1.inject(atOnceUsers(5)),
-    scn2.inject(rampUsers(20).during(30.seconds))
-  ).protocols(httpProtocol)
+//  setUp(
+//    scn1.inject(atOnceUsers(5)),
+//    scn2.inject(rampUsers(20).during(30.seconds))
+//  ).protocols(httpProtocol)
 }
