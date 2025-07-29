@@ -1,5 +1,5 @@
 {
-  "id": #{gameId},
+  "id": #{"gameId"},
   "category": "#{category}",
   "name": "#{name}",
   "rating": "#{rating}",
