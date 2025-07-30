@@ -3,6 +3,7 @@ package videoGameDb.feeders
 import io.gatling.http.Predef._
 import io.gatling.core.Predef._
 import io.gatling.core.structure.ChainBuilder
+import io.gatling.http.util.HttpHelper.OkCodes.iterator
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -16,7 +17,7 @@ class ComplexCustomFeeder extends Simulation {
 
 
   // Feeder Setup - using scala to randomly generate Int/Strings
-  val idNumbers = (1 to 10).iterator // creates sequence from 1 to 10
+  var idNumbers = (1 to 10).iterator // creates sequence from 1 to 10 - *** when using an iterator always use VAR instead of VAL because VAL cannot change***
 
   val rnd = new Random() // creates random object
   val now = LocalDate.now() // today's date
@@ -25,6 +26,7 @@ class ComplexCustomFeeder extends Simulation {
 // Custom feeder - with random test data created using Feeder setup
   val customFeeder = Iterator.continually(Map(
     "gameId" -> idNumbers.next(),
+//    "gameId" ->(rnd.nextInt(1000)+ 1), //Uncomment ln 27, Comment ln 26 - this use Random IDs to generate gameId
     "name" -> ("Game-" + randomString(length = 5)),
     "releaseDate" -> getRandomDate(now, rnd),
     "reviewScore" -> rnd.nextInt(100),
@@ -47,6 +49,7 @@ class ComplexCustomFeeder extends Simulation {
     exec(http(requestName = "Authenticate")
       .post("/authenticate")
       .body(StringBody(string = "{\n  \"password\": \"admin\",\n  \"username\": \"admin\"\n}"))
+      .check(status.is(200))
       .check(jsonPath(path = "$.token").saveAs(key = "jwtToken")))
   }
 
@@ -66,7 +69,7 @@ class ComplexCustomFeeder extends Simulation {
     }
   }
 // Scenario and Setup
-  val scn = scenario("Commplex Custom Feeder")
+  val scn = scenario("Complex Custom Feeder")
     .exec(authenticate())
     .exec(createNewGame())
 
