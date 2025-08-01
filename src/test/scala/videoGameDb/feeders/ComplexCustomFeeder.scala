@@ -3,7 +3,7 @@ package videoGameDb.feeders
 import io.gatling.http.Predef._
 import io.gatling.core.Predef._
 import io.gatling.core.structure.ChainBuilder
-import io.gatling.http.util.HttpHelper.OkCodes.iterator
+
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
